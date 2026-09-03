@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#F5EFDF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Cajá vs Vila">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/caja-vila-logo-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/caja-vila-logo-180.png">
+  <title>Cajá vs Vila — Football Draft</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== TELA 1: SPLASH ===================== -->
+  <main id="splashScreen" class="screen active">
+    <div class="card">
+
+      <div class="brand">
+        <img class="caja-vila-logo" src="assets/caja-vila-logo-512.png" alt="Logo Cajá vs Vila">
+        <h1 class="title">
+          <span>CAJÁ</span>
+          <span class="vs">VS VILA</span>
+        </h1>
+        <p class="subtitle">FUTEBOL<br>DRAFT · SIMULAÇÃO</p>
+      </div>
+
+      <div class="actions">
+        <button id="startBtn" class="btn btn-primary">
+          <span class="btn-icon">▶</span> COMEÇAR O JOGO
+        </button>
+      </div>
+
+      <p class="version">DRAFT + PLANO DE JOGO</p>
+
+    </div>
+  </main>
+
+  <!-- ===================== TELA 2: MENU PRINCIPAL ===================== -->
+  <main id="menuScreen" class="screen">
+    <div class="menu-wrap">
+
+      <!-- Topo -->
+      <header class="topbar">
+        <div class="topbar-brand">
+          <img class="topbar-logo" src="assets/caja-vila-logo-192.png" alt="">
+          <span class="topbar-title">CAJÁ VS VILA</span>
+        </div>
+        <button id="profileBtn" class="icon-btn profile-btn" aria-label="Perfil"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.3" r="3.6"/><path d="M4.8 20c.7-4 3.3-6.2 7.2-6.2s6.5 2.2 7.2 6.2"/></svg></span></button>
+      </header>
+
+      <!-- Grade de menu 4x2 -->
+      <section class="menu-grid">
+        <button class="menu-item" data-action="home">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h5v-6h3v6h5V10"/></svg></span></span> Início
+        </button>
+        <button class="menu-item" data-action="elenco">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16.2" cy="9" r="2.4"/><path d="M2.8 19.5c.5-3.3 2.8-5.2 5.7-5.2s5.2 1.9 5.7 5.2"/><path d="M14.6 14.7c2.4.2 4.2 1.9 4.6 4.8"/></svg></span></span> Elenco
+        </button>
+        <button class="menu-item" data-action="bank">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10 12 4.5 20.5 10"/><path d="M5 10.5v8.3M9.3 10.5v8.3M14.7 10.5v8.3M19 10.5v8.3"/><path d="M3 19.3h18"/><path d="M3.5 10h17"/></svg></span></span> Banco
+        </button>
+        <button class="menu-item" data-action="modos">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2c-2-1.4-4.6-1.7-7.5-1V17c2.9-.7 5.5-.4 7.5 1"/><path d="M12 6.2c2-1.4 4.6-1.7 7.5-1V17c-2.9-.7-5.5-.4-7.5 1V6.2Z"/></svg></span></span> Modos
+        </button>
+        <button class="menu-item" data-action="records">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4h9v4.3a4.5 4.5 0 0 1-9 0V4Z"/><path d="M7.5 5.3H5a2.6 2.6 0 0 0 2.5 2.9M16.5 5.3H19A2.6 2.6 0 0 1 16.5 8.2"/><path d="M12 12.8v3.4"/><path d="M8.7 20h6.6"/><path d="M8.7 20c0-2.1 1.3-3.3 3.3-3.3s3.3 1.2 3.3 3.3"/></svg></span></span> Recordes
+        </button>
+        <button class="menu-item" data-action="achievements">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 6.3 10.3M15 3l2.7 7.3"/><path d="M9 3h6"/><circle cx="12" cy="15.3" r="5.2"/><path d="M12 12.6l1.1 2.3 2.5.3-1.8 1.7.5 2.5-2.3-1.3-2.3 1.3.5-2.5-1.8-1.7 2.5-.3z" fill="currentColor" stroke="none"/></svg></span></span> Conquistas
+        </button>
+        <button class="menu-item" data-action="museum">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5 12 4.5l8.5 5"/><path d="M4.5 9.8v8.9M8.6 9.8v8.9M12 9.8v8.9M15.4 9.8v8.9M19.5 9.8v8.9"/><path d="M2.8 19.8h18.4"/><path d="M3.3 9.8h17.4"/></svg></span></span> Museu
+        </button>
+        <button class="menu-item" data-action="system">
+          <span class="menu-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M12 3.3v2.5M12 18.2v2.5M20.7 12h-2.5M5.8 12H3.3M18.1 5.9l-1.8 1.8M7.7 16.3l-1.8 1.8M18.1 18.1l-1.8-1.8M7.7 7.7 5.9 5.9"/></svg></span></span> Sistema
+        </button>
+      </section>
+
+      <!-- Painel do usuário -->
+      <section class="panel">
+        <p class="panel-eyebrow">Painel do usuário</p>
+
+        <div class="panel-block">
+          <h3 class="panel-title"><span class="title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.3" y="5.3" width="14" height="13.4" rx="1.5"/><path d="M17.3 9.3h3.4v7.2a2 2 0 0 1-2 2h-1.4"/><path d="M6.3 9h8M6.3 12h8M6.3 15h5"/></svg></span>Notícias</h3>
+          <p class="panel-empty">Em breve — nenhuma notícia por aqui ainda.</p>
+        </div>
+
+        <div class="panel-block">
+          <h3 class="panel-title"><span class="title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 6.3 10.3M15 3l2.7 7.3"/><path d="M9 3h6"/><circle cx="12" cy="15.3" r="5.2"/><circle cx="12" cy="15.3" r="2.3"/></svg></span>Ranking Online</h3>
+          <div id="rankingBox"><p class="panel-empty">Carregando ranking…</p></div>
+        </div>
+
+        <div class="panel-block">
+          <h3 class="panel-title"><span class="title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>Últimas Partidas Online</h3>
+          <div id="homeHistory" class="profile-history"><p class="panel-empty">Nenhuma partida registrada ainda.</p></div>
+        </div>
+        <div class="panel-block">
+          <h3 class="panel-title"><span class="title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8 14.5 9l6.7.6-5.1 4.4 1.6 6.5L12 17.1l-5.7 3.4 1.6-6.5-5.1-4.4L9.5 9Z"/></svg></span>Eventos</h3>
+          <button id="openEventsBtn" class="btn btn-secondary" type="button" style="width:100%;">🎉 Ver eventos do jogo</button>
+        </div>
+      </section>
+
+      <section id="installCard" class="install-card hidden">
+        <div class="install-head">
+          <span class="install-icon">⌂</span>
+          <div>
+            <strong>Adicionar à tela inicial</strong>
+            <small>Jogue como um app, direto do celular</small>
+          </div>
+        </div>
+        <button id="installBtn" class="btn btn-primary install-btn">ADICIONAR AGORA</button>
+        <button id="iosHelpBtn" class="install-help" type="button">Como adicionar no iPhone?</button>
+      </section>
+
+      <div class="bottom-spacer"></div>
+    </div>
+
+    <!-- Barra inferior -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-action="none">
+        <span class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h5v-6h3v6h5V10"/></svg></span></span><span class="nav-label">Início</span>
+      </button>
+      <button class="nav-item" data-action="none">
+        <span class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16.2" cy="9" r="2.4"/><path d="M2.8 19.5c.5-3.3 2.8-5.2 5.7-5.2s5.2 1.9 5.7 5.2"/><path d="M14.6 14.7c2.4.2 4.2 1.9 4.6 4.8"/></svg></span></span><span class="nav-label">Elenco</span>
+      </button>
+      <button class="nav-item" data-action="bank">
+        <span class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10 12 4.5 20.5 10"/><path d="M5 10.5v8.3M9.3 10.5v8.3M14.7 10.5v8.3M19 10.5v8.3"/><path d="M3 19.3h18"/><path d="M3.5 10h17"/></svg></span></span><span class="nav-label">Banco</span>
+      </button>
+      <button class="nav-item" data-action="modos">
+        <span class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2c-2-1.4-4.6-1.7-7.5-1V17c2.9-.7 5.5-.4 7.5 1"/><path d="M12 6.2c2-1.4 4.6-1.7 7.5-1V17c-2.9-.7-5.5-.4-7.5 1V6.2Z"/></svg></span></span><span class="nav-label">Modos</span>
+      </button>
+      <button class="nav-item" data-action="system">
+        <span class="nav-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M12 3.3v2.5M12 18.2v2.5M20.7 12h-2.5M5.8 12H3.3M18.1 5.9l-1.8 1.8M7.7 16.3l-1.8 1.8M18.1 18.1l-1.8-1.8M7.7 7.7 5.9 5.9"/></svg></span></span><span class="nav-label">Sistema</span>
+      </button>
+    </nav>
+  </main>
+
+  <!-- ===================== TELA 3: BANCO ===================== -->
+  <main id="bankScreen" class="screen">
+    <div class="bank-wrap">
+      <header class="modos-header">
+        <button id="backFromBank" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Banco</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <div class="deck-tabs">
+        <button class="deck-tab active" data-deck="normal">🃏 Normal</button>
+        <button class="deck-tab" data-deck="professional">🏆 Profissional</button>
+      </div>
+      <div class="bank-tools">
+        <input id="playerSearch" type="search" placeholder="Pesquisar jogador..." autocomplete="off">
+        <select id="positionFilter"><option value="TODAS">Todas as posições</option><option value="ATA">Ataque</option><option value="MEIA">Meia</option><option value="GOL">Gol</option></select>
+        <select id="rarityFilter"><option value="TODAS">Todas as raridades</option><option>GOAT</option><option>EXTREME</option><option>LENDÁRIA</option><option>ÉPICA</option><option>RARA</option><option>COMUM</option></select>
+      </div>
+      <div id="deckStats" class="deck-stats"></div>
+      <section id="playerGrid" class="player-grid"></section>
+      <section class="compare-panel">
+        <h3>⚔️ Comparar jogadores</h3>
+        <div class="compare-selects"><select id="compareA"><option value="">Jogador 1</option></select><select id="compareB"><option value="">Jogador 2</option></select></div>
+        <div id="compareResult" class="compare-result">Escolha dois jogadores do mesmo baralho.</div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== TELA 3: MODOS ===================== -->
+  <main id="modosScreen" class="screen">
+    <div class="modos-wrap">
+
+      <header class="modos-header">
+        <button id="backFromModos" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Modos</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+
+      <section class="modos-list">
+        <button class="modos-item modos-item-active" data-action="campaign" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4h9v4.3a4.5 4.5 0 0 1-9 0V4Z"/><path d="M7.5 5.3H5a2.6 2.6 0 0 0 2.5 2.9M16.5 5.3H19A2.6 2.6 0 0 1 16.5 8.2"/><path d="M12 12.8v3.4"/><path d="M8.7 20h6.6"/><path d="M8.7 20c0-2.1 1.3-3.3 3.3-3.3s3.3 1.2 3.3 3.3"/></svg></span></span><span class="modos-name">Modo Campanha</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="online" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17"/></svg></span></span><span class="modos-name">Modo Online</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="tournament" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 6.3 10.3M15 3l2.7 7.3"/><path d="M9 3h6"/><circle cx="12" cy="15.3" r="5.2"/><circle cx="12" cy="15.3" r="2.3"/></svg></span></span><span class="modos-name">Torneio Online</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="survival" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8c1.6 2.8 5 5.2 5 9.4a5 5 0 1 1-10 0c0-1.6.7-2.6 1.5-3.4-.2 1.4.6 2 1.3 1.7-.7-2.5.7-4.8 2.2-7.7Z"/></svg></span></span><span class="modos-name">Modo Sobrevivência</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="local2p" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16.2" cy="9" r="2.4"/><path d="M2.8 19.5c.5-3.3 2.8-5.2 5.7-5.2s5.2 1.9 5.7 5.2"/><path d="M14.6 14.7c2.4.2 4.2 1.9 4.6 4.8"/></svg></span></span><span class="modos-name">2 Jogadores Local</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="draft" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13.2 2 4.6 13.6h5.6l-1.1 8.4L18 10.2h-5.6z"/></svg></span></span><span class="modos-name">Draft Rápido</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="challenges" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.3"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span></span><span class="modos-name">Desafios</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+      </section>
+    </div>
+  </main>
+
+
+
+
+  <!-- ===================== EVENTOS ===================== -->
+  <main id="eventsScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromEvents" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Eventos</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <section class="modos-list">
+        <button class="modos-item modos-item-active" data-action="eventCodes" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8 14.5 9l6.7.6-5.1 4.4 1.6 6.5L12 17.1l-5.7 3.4 1.6-6.5-5.1-4.4L9.5 9Z"/></svg></span></span><span class="modos-name">Ranking de Códigos</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== EVENTO: RANKING DE CÓDIGOS ===================== -->
+  <main id="eventCodesScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromEventCodes" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Ranking de Códigos</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <section class="mode-hero"><span>🏆</span><b>DISPUTA DE CÓDIGOS</b><small>Cada login com um código soma ponto pra ele. Qual código vai ganhar?</small></section>
+      <section class="mode-card">
+        <div id="codesRankingBox"><p class="panel-empty">Carregando…</p></div>
+      </section>
+    </div>
+  </main>
+
+
+
+
+  <!-- ===================== CAMPANHA ===================== -->
+  <main id="campaignScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromCampaign" class="icon-btn back-btn">←</button><span class="modos-title">Campanha</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+      <section class="mode-hero"><span>🏆</span><b>CAMINHO DO CAMPEÃO</b><small>Oitavas → Quartas → Semifinal → Final</small></section>
+      <div id="campaignProgress" class="stage-grid"></div>
+      <section class="mode-card">
+        <div class="mode-card-kicker">PRÓXIMO ADVERSÁRIO</div>
+        <h2 id="campaignOpponent">???</h2>
+        <p id="campaignDifficulty">A dificuldade aumenta a cada fase.</p>
+        <div class="mode-metrics"><span>FASE <b id="campaignStageLabel">OITAVAS</b></span><span>FORÇA <b id="campaignForce">—</b></span></div>
+        <button id="startCampaignBtn" class="btn btn-primary">🏟️ JOGAR FASE</button>
+        <button id="resetCampaignBtn" class="btn btn-secondary">↻ RECOMEÇAR CAMPANHA</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== SOBREVIVÊNCIA ===================== -->
+  <main id="survivalScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromSurvival" class="icon-btn back-btn">←</button><span class="modos-title">Sobrevivência</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+      <section class="mode-hero survival-hero"><span>🔥</span><b>PARTIDA APÓS PARTIDA</b><small>Vença para continuar. Cada adversário fica mais forte.</small></section>
+      <div class="survival-record"><span>🏅 RECORDE</span><strong id="survivalRecord">0</strong><small>vitórias seguidas</small></div>
+      <section class="mode-card">
+        <div class="mode-card-kicker">SEQUÊNCIA ATUAL</div>
+        <h2><span id="survivalStreak">0</span> vitórias</h2>
+        <p id="survivalDifficulty">O próximo adversário será gerado automaticamente.</p>
+        <button id="startSurvivalBtn" class="btn btn-primary">🔥 COMEÇAR</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== DESAFIOS ===================== -->
+  <main id="challengesScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromChallenges" class="icon-btn back-btn">←</button><span class="modos-title">Desafios</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+      <section class="mode-hero"><span>🎯</span><b>DESAFIOS DA SEMANA</b><small>Regras diferentes para testar seu time.</small></section>
+      <div id="challengeList" class="challenge-list"></div>
+    </div>
+  </main>
+
+  <!-- ===================== 2 JOGADORES LOCAL ===================== -->
+  <main id="local2pScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromLocal2p" class="icon-btn back-btn">←</button><span class="modos-title">2 Jogadores Local</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+      <section class="mode-hero"><span>👥</span><b>DUELo POR TURNOS</b><small>Um jogador configura e passa o celular para o outro.</small></section>
+      <section class="mode-card local-turn-card">
+        <div class="turn-badge">TURNO 1</div>
+        <label>👤 NOME DO JOGADOR 1</label><input id="localP1Name" class="mode-input" maxlength="18" placeholder="Jogador 1" value="Jogador 1">
+        <label>👤 NOME DO JOGADOR 2</label><input id="localP2Name" class="mode-input" maxlength="18" placeholder="Jogador 2" value="Jogador 2">
+        <label>🃏 BARALHO</label><div class="local-format-grid"><button type="button" class="draft-choice active" data-local-deck="normal">🃏<b>Normal</b></button><button type="button" class="draft-choice" data-local-deck="professional">🏆<b>Profissional</b></button></div>
+        <label>📋 FORMATO DO DRAFT</label><div class="local-format-grid"><button type="button" class="draft-choice active" data-local-format="5">⚽<b>5v5</b></button><button type="button" class="draft-choice" data-local-format="11">🏟️<b>11v11</b></button></div>
+        <div class="local-note">Os dois jogadores fazem o draft alternando: <b>1 escolha para cada time por turno</b>. Depois os elencos são simulados.</div>
+        <button id="startLocal2pBtn" class="btn btn-primary">🃏 COMEÇAR DRAFT</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== DRAFT LOCAL 2P ===================== -->
+  <main id="localDraftScreen" class="screen">
+    <div class="draft-game-wrap">
+      <header class="draft-game-header">
+        <button id="backFromLocalDraft" class="icon-btn back-btn" aria-label="Sair">×</button>
+        <div><span class="draft-game-title">DRAFT LOCAL</span><span id="localDraftFormat" class="draft-game-subtitle">5v5 · NORMAL</span></div>
+        <div id="localDraftRoundBadge" class="draft-round-badge">T1</div>
+      </header>
+      <section class="draft-score">
+        <div><small id="localDraftP1Label">TIME A</small><strong id="localDraftP1Count">0/5</strong></div>
+        <div class="draft-vs">VS</div>
+        <div><small id="localDraftP2Label">TIME B</small><strong id="localDraftP2Count">0/5</strong></div>
+      </section>
+      <section class="draft-round-info">
+        <div><span>TURNO</span><strong id="localDraftTurnText">1</strong></div>
+        <div><span>ESCOLHE</span><strong id="localDraftPicker">TIME A</strong></div>
+        <div><span>OBJETIVO</span><strong id="localDraftTarget">5</strong></div>
+      </section>
+      <section class="draft-rule-note" id="localDraftRuleNote">Cada time escolhe exatamente 1 jogador por turno.</section>
+      <section id="localDraftCards" class="draft-cards"></section>
+      <section class="draft-rosters">
+        <div class="draft-roster"><div class="roster-head"><b id="localRosterAName">TIME A</b><span id="localRosterAOvr">OVR —</span></div><div id="localRosterA" class="roster-list"></div></div>
+        <div class="draft-roster"><div class="roster-head"><b id="localRosterBName">TIME B</b><span id="localRosterBOvr">OVR —</span></div><div id="localRosterB" class="roster-list"></div></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== MODO ONLINE — LOBBY ===================== -->
+  <main id="onlineScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromOnline" class="icon-btn back-btn" aria-label="Voltar">←</button><span class="modos-title">Modo Online</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+      <section class="mode-hero"><span>🌐</span><b>JOGUE COM UM AMIGO</b><small>Crie uma sala e compartilhe o código, ou entre com um código que você recebeu. Você entra na partida com o nome e o avatar do seu perfil.</small></section>
+
+      <div class="tabs">
+        <button id="onlineTabCriar" class="tab-btn active" type="button">Criar sala</button>
+        <button id="onlineTabEntrar" class="tab-btn" type="button">Entrar em sala</button>
+      </div>
+
+      <section id="onlineCreatePane" class="mode-card local-turn-card">
+        <label>🃏 BARALHO</label>
+        <div class="local-format-grid">
+          <button type="button" class="draft-choice active" data-online-deck="normal">🃏<b>Normal</b></button>
+          <button type="button" class="draft-choice" data-online-deck="professional">🏆<b>Profissional</b></button>
+        </div>
+        <label>📋 FORMATO</label>
+        <div class="local-format-grid">
+          <button type="button" class="draft-choice active" data-online-format="5">⚽<b>5v5</b></button>
+          <button type="button" class="draft-choice" data-online-format="11">🏟️<b>11v11</b></button>
+        </div>
+        <div class="local-note">Você monta seu time e compartilha o código com o adversário. Quando ele entrar, os dois fazem o draft ao mesmo tempo, cada um no seu aparelho.</div>
+        <button id="criarSalaBtn" class="btn btn-primary" type="button">🌐 CRIAR SALA</button>
+        <p id="onlineCreateErro" class="error-text"></p>
+      </section>
+
+      <section id="onlineJoinPane" class="mode-card local-turn-card hidden">
+        <label>🔑 CÓDIGO DA SALA</label>
+        <input id="onlineCodeInput" class="mode-input online-code-input" maxlength="6" placeholder="EX: 7F3KQ" autocomplete="off">
+        <div class="local-note">Peça o código de 5 caracteres para quem criou a sala.</div>
+        <button id="entrarSalaBtn" class="btn btn-primary" type="button">➡️ ENTRAR NA SALA</button>
+        <p id="onlineJoinErro" class="error-text"></p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== MODO ONLINE — SALA / STATUS ===================== -->
+  <main id="onlineRoomScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromOnlineRoom" class="icon-btn back-btn" aria-label="Voltar">←</button><span class="modos-title">Sala Online</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+
+      <section id="onlineCodeBlock" class="mode-card online-code-card hidden">
+        <div class="mode-card-kicker">CÓDIGO DA SALA</div>
+        <div id="onlineCodeDisplay" class="online-code-display">—————</div>
+        <button id="copyCodeBtn" class="btn btn-secondary" type="button">📋 COPIAR CÓDIGO</button>
+        <div class="online-status"><span class="online-dot"></span><span id="onlineWaitingText">Aguardando adversário entrar…</span></div>
+        <button id="cancelSalaBtn" class="btn btn-logout" type="button">CANCELAR SALA</button>
+      </section>
+
+      <section id="onlineWaitingBlock" class="mode-card hidden">
+        <div class="mode-card-kicker">SALA <span id="onlineWaitingCode"></span></div>
+        <h2 id="onlineWaitingTitle">Preparando…</h2>
+        <div class="online-status"><span class="online-dot"></span><span id="onlineWaitingSub">Aguardando…</span></div>
+      </section>
+
+      <section id="onlineResultBlock" class="mode-card hidden">
+        <div class="mode-card-kicker">RESULTADO DA PARTIDA ONLINE</div>
+        <h2 id="onlineResultScoreTeams">Você × Adversário</h2>
+        <div class="final-score" id="onlineResultScore">0 × 0</div>
+        <p id="onlineResultNote"></p>
+        <button id="onlineResultRematchBtn" class="btn btn-primary" type="button">🔁 ACEITAR REVANCHE</button>
+        <button id="onlineResultHomeBtn" class="btn btn-secondary" type="button">🏠 VOLTAR AO INÍCIO</button>
+      </section>
+
+      <p id="onlineRoomErro" class="error-text"></p>
+    </div>
+  </main>
+
+  <!-- ===================== DRAFT RÁPIDO ===================== -->
+  <main id="draftSetupScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromDraftSetup" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Draft Rápido</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+
+      <section class="draft-setup-card">
+        <div class="draft-kicker">⚡ NOVO DRAFT</div>
+        <h2>Monte seu elenco</h2>
+        <p>Escolha o baralho e o tamanho do time. A IA disputa as escolhas com você.</p>
+
+        <div class="draft-section">
+          <span class="draft-label">BARALHO</span>
+          <div class="choice-grid">
+            <button class="draft-choice active" data-deck-choice="normal" type="button">🃏<b>Normal</b><small>Jogadores do baralho normal</small></button>
+            <button class="draft-choice" data-deck-choice="professional" type="button">🏆<b>Profissional</b><small>Craques e versões históricas</small></button>
+          </div>
+        </div>
+
+        <div class="draft-section">
+          <span class="draft-label">FORMATO</span>
+          <div class="choice-grid">
+            <button class="draft-choice active" data-format-choice="5" type="button">⚽<b>5v5</b><small>5 titulares + 3 reservas</small></button>
+            <button class="draft-choice" data-format-choice="11" type="button">🏟️<b>11v11</b><small>11 titulares + 4 reservas</small></button>
+          </div>
+        </div>
+
+        <div class="draft-rules-mini">
+          <b>REGRAS DO DRAFT</b>
+          <span>• 3 cartas aparecem por rodada</span>
+          <span>• Você escolhe 1 e a IA escolhe outra</span>
+          <span>• Jogador escolhido não pode voltar</span>
+          <span>• Reroll: máximo de 3 vezes</span>
+          <span>• Limites de posição e OVR são respeitados</span>
+        </div>
+
+        <button id="startDraftBtn" class="btn btn-primary" type="button">⚡ COMEÇAR DRAFT</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== DRAFT EM ANDAMENTO ===================== -->
+  <main id="draftGameScreen" class="screen">
+    <div class="draft-game-wrap">
+      <header class="draft-game-header">
+        <button id="backFromDraftGame" class="icon-btn back-btn" aria-label="Sair">×</button>
+        <div>
+          <span class="draft-game-title">DRAFT RÁPIDO</span>
+          <span id="draftFormatLabel" class="draft-game-subtitle">5v5 · NORMAL</span>
+        </div>
+        <div id="draftRoundBadge" class="draft-round-badge">R1</div>
+      </header>
+
+      <section class="draft-score">
+        <div><small>SEU ELENCO</small><strong id="userDraftCount">0/8</strong></div>
+        <div class="draft-vs">VS</div>
+        <div><small>IA</small><strong id="aiDraftCount">0/8</strong></div>
+      </section>
+
+      <section class="draft-round-info">
+        <div><span>RODADA</span><strong id="draftRoundText">1</strong></div>
+        <div><span>REROLL</span><strong id="rerollCountText">3</strong></div>
+        <div><span>OBJETIVO</span><strong id="draftTargetText">8</strong></div>
+      </section>
+
+      <section class="draft-rule-note" id="draftRuleNote">Escolha uma das 3 cartas.</section>
+
+      <section class="position-dashboard">
+        <div class="position-dashboard-head"><b>📋 POSIÇÕES</b><span>titulares necessários</span></div>
+        <div id="draftPositionBoard" class="position-board"></div>
+        <div id="draftPenaltyNote" class="draft-penalty-note">Se faltar uma posição, o jogo adapta um jogador do elenco e aplica perda de OVR.</div>
+      </section>
+
+      <section id="draftCards" class="draft-cards"></section>
+
+      <div class="draft-actions">
+        <button id="rerollDraftBtn" class="btn draft-reroll" type="button">🔄 REROLL <span id="rerollBtnCount">3</span></button>
+      </div>
+
+      <section class="draft-rosters">
+        <div class="draft-roster">
+          <div class="roster-head"><b>VOCÊ</b><span id="userRosterOvr">OVR —</span></div>
+          <div id="userRoster" class="roster-list"></div>
+        </div>
+        <div class="draft-roster">
+          <div class="roster-head"><b>IA</b><span id="aiRosterOvr">OVR —</span></div>
+          <div id="aiRoster" class="roster-list"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== PLANO DE JOGO ===================== -->
+  <main id="gamePlanScreen" class="screen">
+    <div class="game-plan-wrap">
+      <header class="modos-header">
+        <button id="backFromGamePlan" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Plano de Jogo</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+
+      <section class="plan-summary">
+        <div><small>SEU TIME</small><strong id="planTeamCount">0/0</strong></div>
+        <div><small>OVR</small><strong id="planTeamOvr">—</strong></div>
+        <div><small>FORMAÇÃO</small><strong id="planFormationLabel">4-3-3</strong></div>
+      </section>
+
+      <section class="plan-panel">
+        <div class="plan-panel-head"><h3>⚽ Escalação</h3><span>Toque para editar</span></div>
+        <div class="formation-tabs" id="formationTabs"></div>
+        <div id="customFormationEditor" class="custom-formation-editor hidden"></div>
+        <div id="formationPitch" class="formation-pitch"></div>
+        <div class="plan-hint">As posições são preenchidas com os jogadores do seu Draft. Jogadores fora de posição sofrem perda de OVR.</div>
+      </section>
+
+      <section class="plan-panel">
+        <div class="plan-panel-head"><h3>👥 Lista de jogadores</h3><span id="planRosterStatus"></span></div>
+        <div id="planPlayerList" class="plan-player-list"></div>
+      </section>
+
+      <section class="plan-panel substitution-panel">
+        <div class="plan-panel-head"><h3>🔄 Substituições</h3><span>Selecione titular → reserva</span></div>
+        <div class="substitution-grid">
+          <select id="subStarter"><option value="">Escolha o titular</option></select>
+          <select id="subReserve"><option value="">Escolha o reserva</option></select>
+        </div>
+        <button id="makeSubBtn" class="btn btn-primary plan-small-btn" type="button">FAZER SUBSTITUIÇÃO</button>
+        <p id="substitutionNote" class="plan-note">Nenhuma substituição feita.</p>
+      </section>
+
+      <section class="plan-panel tactics-panel">
+        <div class="plan-panel-head"><h3>🎯 Tática</h3><span>Estilo de jogo</span></div>
+        <div class="tactic-row"><span>Comportamento</span><div class="segmented" id="mentalityChoices"><button data-mentality="ofensiva">Ofensiva</button><button data-mentality="equilibrada" class="active">Equilibrada</button><button data-mentality="defensiva">Defensiva</button></div></div>
+        <div class="toggle-row"><span><b>Linha de impedimento</b><small>Subir a defesa em bloco</small></span><button class="toggle-pill" id="offsideToggle" data-on="false">NÃO</button></div>
+        <div class="toggle-row"><span><b>Contra-ataque</b><small>Transição rápida após recuperar a bola</small></span><button class="toggle-pill" id="counterToggle" data-on="false">NÃO</button></div>
+        <div class="toggle-row"><span><b>Posse de bola</b><small>Prioriza circulação e controle</small></span><button class="toggle-pill" id="possessionToggle" data-on="true">SIM</button></div>
+        <div class="tactic-slider"><div><span>Pressão</span><b id="pressureValue">Média</b></div><input id="pressureRange" type="range" min="1" max="3" value="2"></div>
+      </section>
+
+      <button id="saveGamePlanBtn" class="btn btn-primary" type="button">💾 SALVAR PLANO E CONTINUAR</button>
+    </div>
+  </main>
+
+  <!-- ===================== SIMULADOR DE PARTIDA ===================== -->
+  <main id="matchScreen" class="screen">
+    <div class="match-wrap">
+      <header class="match-topbar">
+        <div class="match-brand"><span>🏆</span><b>CAJÁ VS VILA</b></div>
+        <div class="match-wallet">💰 <b>R$ 1575</b></div>
+        <div class="match-crowd">👥 <b id="matchCrowd">205</b></div>
+        <button id="matchSoundBtn" class="match-round-btn" type="button">🔔</button>
+      </header>
+
+      <section class="match-scoreboard">
+        <div class="match-clock"><span id="matchMinute">0'</span><small id="matchWeather">☁️ Nublado</small></div>
+        <div class="match-teams"><strong id="homeTeamName">WESLLEY FC</strong><b id="matchScore">0 × 0</b><strong id="awayTeamName">ADVERSÁRIO</strong></div>
+        <div class="match-stadium-line">🏟️ <span id="matchStadiumLabel">Quadra da Vila</span></div>
+        <div class="match-progress"><span id="matchProgress"></span></div>
+        <div class="match-possession"><span id="possHomeBar" class="poss-home"></span><span id="possAwayBar" class="poss-away"></span></div>
+        <div class="poss-label" id="possLabel">52% posse · 48%</div>
+      </section>
+
+      <section class="speed-grid">
+        <button class="match-speed active" data-speed="0.5" type="button">⚡ Rápida</button>
+        <button class="match-speed" data-speed="1" type="button">▶️ Normal</button>
+        <button class="match-speed" data-speed="0.25" type="button">🐢 Devagar</button>
+        <button id="finishMatchBtn" class="match-speed" type="button">⏩ Resultado</button>
+      </section>
+
+      <section class="stadium-picker match-panel">
+        <div class="match-panel-head"><h3>🏟️ Estádio</h3><span>Acervo</span></div>
+        <div id="stadiumGrid" class="stadium-grid"></div>
+      </section>
+
+      <section class="match-pitch-card">
+        <div id="matchPitch" class="match-pitch" aria-label="Campo da partida"></div>
+      </section>
+
+      <section class="match-sub-panel match-panel">
+        <div class="match-panel-head"><h3>🔄 Substituição</h3><span>Durante a partida</span></div>
+        <div class="match-sub-grid"><select id="matchSubStarter"><option value="">Titular</option></select><select id="matchSubReserve"><option value="">Reserva</option></select></div>
+        <button id="matchMakeSubBtn" class="btn btn-primary match-sub-btn" type="button">FAZER SUBSTITUIÇÃO</button>
+        <p id="matchSubNote" class="match-note">Nenhuma substituição feita.</p>
+      </section>
+
+      <section class="match-panel commentary-panel">
+        <div class="match-panel-head"><h3>🎙️ Narração</h3><span id="commentatorName">Rádio Vila</span></div>
+        <select id="commentatorSelect" class="full-select"><option value="radio-vila">Rádio Vila</option><option value="voz-cagepa">Voz da CAGEPA</option><option value="locutor-classico">Locutor Clássico</option><option value="narracao-rapida">Narração Rápida</option></select>
+        <div id="liveCommentary" class="live-commentary">A bola vai rolar. Boa partida!</div>
+      </section>
+
+      <section id="decisionPanel" class="match-panel decision-panel hidden">
+        <div class="match-panel-head"><h3>🧠 DECISÃO DA JOGADA</h3><span id="decisionTeamLabel">TIME A</span></div>
+        <div id="decisionSituation" class="decision-situation">A jogada está no ataque. Escolha a ação.</div>
+        <div id="decisionChoices" class="decision-choices"></div>
+      </section>
+
+      <section class="match-panel timeline-panel">
+        <div class="match-panel-head"><h3>🕒 Linha do tempo</h3><span id="timelineStatus">AO VIVO</span></div>
+        <div id="matchTimeline" class="match-timeline"></div>
+      </section>
+
+      <section class="match-panel stats-panel">
+        <div class="match-panel-head"><h3>📊 Estatísticas</h3><span>Em tempo real</span></div>
+        <div id="liveStats" class="live-stats"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== RESULTADO DA PARTIDA ===================== -->
+  <main id="matchResultScreen" class="screen">
+    <div class="match-result-wrap">
+      <div class="result-whistle">🏁</div>
+      <div class="result-kicker">FIM DE JOGO</div>
+      <h1 id="finalHomeName">WESLLEY FC</h1>
+      <div id="finalScore" class="final-score">3 × 2</div>
+      <h2 id="finalAwayName">ADVERSÁRIO</h2>
+      <div id="finalWinnerNote" class="final-winner-note">Vitória!</div>
+      <section class="final-stats-card">
+        <h3>📊 ESTATÍSTICAS</h3>
+        <div id="finalStats" class="final-stats"></div>
+      </section>
+      <section class="final-events-card">
+        <h3>🕒 ÚLTIMOS EVENTOS</h3>
+        <div id="finalTimeline" class="final-timeline"></div>
+      </section>
+      <button id="continueAfterMatchBtn" class="btn btn-primary">CONTINUAR</button>
+      <button id="replayMatchBtn" class="btn btn-secondary">🔁 NOVA SIMULAÇÃO</button>
+    </div>
+  </main>
+
+  <!-- ===================== DRAFT RESULTADO ===================== -->
+  <main id="draftResultScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromDraftResult" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Draft Concluído</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <section class="draft-result-card">
+        <div class="draft-result-icon">🏆</div>
+        <h2 id="draftResultTitle">Draft concluído!</h2>
+        <p id="draftResultSummary"></p>
+        <div class="result-columns">
+          <div><b>VOCÊ</b><strong id="resultUserOvr">—</strong><small>OVR médio</small></div>
+          <div><b>IA</b><strong id="resultAiOvr">—</strong><small>OVR médio</small></div>
+        </div>
+        <button id="openPlanAgainBtn" class="btn btn-primary" type="button">⚽ EDITAR PLANO DE JOGO</button>
+        <button id="newDraftBtn" class="btn btn-primary" type="button">⚡ NOVO DRAFT</button>
+        <button id="resultHomeBtn" class="btn btn-logout" type="button">VOLTAR AO MENU</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== TELA: SISTEMA ===================== -->
+  <main id="systemScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromSystem" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Sistema</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <section class="settings-list">
+        <label class="setting-row"><span><b>🔊 Sons</b><small>Ativar efeitos sonoros quando forem usados</small></span><input id="soundToggle" type="checkbox"></label>
+        <label class="setting-row"><span><b>📳 Vibração</b><small>Feedback tátil em ações do jogo</small></span><input id="vibrationToggle" type="checkbox"></label>
+        <div class="setting-row setting-select-row"><span><b>🤖 Dificuldade da IA</b><small>Define como a IA escolhe no Draft Rápido</small></span><select id="aiDifficulty"><option value="easy">Fácil</option><option value="normal">Normal</option><option value="hard">Difícil</option><option value="expert">Especialista</option></select></div>
+        <div class="setting-row setting-select-row"><span><b>🎙️ Narrador padrão</b><small>Voz usada ao abrir uma nova partida</small></span><select id="defaultCommentator"><option value="radio-vila">Rádio Vila</option><option value="voz-cagepa">Voz da CAGEPA</option><option value="locutor-classico">Locutor Clássico</option><option value="narracao-rapida">Narração Rápida</option></select></div>
+        <div class="setting-row setting-select-row"><span><b>⏱️ Velocidade da partida</b><small>Ritmo padrão ao iniciar uma simulação</small></span><select id="defaultSpeed"><option value="0.5">⚡ Rápida</option><option value="1">▶️ Normal</option><option value="0.25">🐢 Devagar</option></select></div>
+        <label class="setting-row"><span><b>✨ Brilho nas cartas raras</b><small>Animação de brilho em cartas Lendária, Extreme e GOAT</small></span><input id="cardShineToggle" type="checkbox"></label>
+        <label class="setting-row"><span><b>🌀 Reduzir animações</b><small>Desativa o efeito de entrada estilo figurinha nos menus</small></span><input id="reduceMotionToggle" type="checkbox"></label>
+        <button id="clearLocalDataBtn" class="danger-setting">Limpar preferências locais</button>
+        <button id="resetProgressBtn" class="danger-setting">Resetar progresso (campanha, sobrevivência, desafios)</button>
+        <div class="system-status"><b>CAJÁ VS VILA</b><span>Todos os modos usam draft • Normal e Profissional separados</span><span>3 posições: ATA · MEIA · GOL</span></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== TELA 4: LOGIN / CRIAR CONTA ===================== -->
+  <main id="authScreen" class="screen">
+    <div class="auth-wrap">
+
+      <div class="brand" style="margin-top:6vh;">
+        <img class="caja-vila-logo" src="assets/caja-vila-logo-512.png" alt="Logo Cajá vs Vila">
+        <h1 class="title" style="font-size:clamp(28px,9vw,38px);">
+          <span>CAJÁ</span><span class="vs">VS VILA</span>
+        </h1>
+      </div>
+
+      <div class="tabs">
+        <button id="tabEntrar" class="tab-btn active" type="button">Entrar</button>
+        <button id="tabCriar" class="tab-btn" type="button">Criar conta</button>
+      </div>
+
+      <!-- Entrar -->
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label>Nome</label>
+          <input id="loginNome" type="text" placeholder="Seu nome" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input id="loginSenha" type="password" placeholder="Sua senha" autocomplete="current-password" required>
+        </div>
+        <p id="loginErro" class="error-text"></p>
+        <button type="submit" class="btn btn-primary">ENTRAR</button>
+      </form>
+
+      <!-- Criar conta -->
+      <form id="cadastroForm" class="auth-form hidden">
+        <div class="form-group">
+          <label>Nome</label>
+          <input id="cadNome" type="text" placeholder="Seu nome" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input id="cadSenha" type="password" placeholder="Crie uma senha" autocomplete="new-password" required>
+        </div>
+        <div class="form-group">
+          <label>Cidade</label>
+          <select id="cadCidade" required>
+            <option value="" disabled selected>Escolha sua cidade</option>
+            <option>Manecos</option>
+            <option>Cajá</option>
+            <option>Caldas Brandão</option>
+            <option>Vila Nova</option>
+            <option>Sítios Vizinhos</option>
+            <option>Boqueirão</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Código (opcional)</label>
+          <input id="cadCodigo" type="text" maxlength="3" placeholder="Ex: AND" autocomplete="off" style="text-transform:uppercase;">
+        </div>
+        <p id="cadErro" class="error-text"></p>
+        <button type="submit" class="btn btn-primary">CRIAR CONTA</button>
+      </form>
+
+    </div>
+  </main>
+
+  <!-- ===================== TELA 5: PERFIL ===================== -->
+  <main id="profileScreen" class="screen">
+    <div class="modos-wrap">
+
+      <header class="modos-header">
+        <button id="backFromProfile" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Perfil</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+
+      <div class="profile-top">
+        <button id="avatarBtn" class="avatar-circle">😀</button>
+        <h2 id="profileNome" class="profile-nome">—</h2>
+        <p id="profileCidade" class="profile-cidade">—</p>
+      </div>
+
+      <div id="avatarGrid" class="avatar-grid hidden"></div>
+
+      <div class="stats-row profile-stat-grid">
+        <div class="stat-box"><span id="statPartidas" class="stat-num">0</span><span class="stat-label">Partidas</span></div>
+        <div class="stat-box"><span id="statVitorias" class="stat-num">0</span><span class="stat-label">Vitórias</span></div>
+        <div class="stat-box"><span id="statDerrotas" class="stat-num">0</span><span class="stat-label">Derrotas</span></div>
+        <div class="stat-box"><span id="statGols" class="stat-num">0</span><span class="stat-label">Gols</span></div>
+        <div class="stat-box"><span id="statTitulos" class="stat-num">0</span><span class="stat-label">Títulos</span></div>
+      </div>
+
+      <section class="profile-mode-records">
+        <div class="profile-record"><span>🔥</span><b id="profileSurvivalRecord">0</b><small>RECORDE SOBREVIVÊNCIA</small></div>
+        <div class="profile-record"><span>🎯</span><b id="profileChallengesDone">0</b><small>DESAFIOS CONCLUÍDOS</small></div>
+        <div class="profile-record"><span>🏆</span><b id="profileCampaignTitles">0</b><small>CAMPANHAS VENCIDAS</small></div>
+      </section>
+
+      <div class="panel-block" style="border-top:none;">
+        <h3 class="panel-title"><span class="title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>Histórico de partidas</h3>
+        <div id="profileHistory" class="profile-history"><p class="panel-empty">Nenhuma partida registrada ainda.</p></div>
+      </div>
+
+      <button id="logoutBtn" class="btn btn-logout">SAIR DA CONTA</button>
+    </div>
+  </main>
+
+  <!-- ===================== RECORDES ===================== -->
+  <main id="recordsScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromRecords" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Recordes</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+
+      <div class="panel-block" style="border-top:none;">
+        <h3 class="panel-title">📊 Seus números (todos os modos)</h3>
+        <div id="recordsMainStats" class="stats-row profile-stat-grid"></div>
+      </div>
+
+      <div class="panel-block">
+        <h3 class="panel-title">🏅 Melhores marcas</h3>
+        <div id="recordsBestGrid" class="profile-mode-records" style="grid-template-columns:repeat(2,1fr);"></div>
+      </div>
+
+      <div class="panel-block">
+        <h3 class="panel-title">🌍 Ranking geral (TOP 5)</h3>
+        <div id="recordsGlobalRanking"><p class="panel-empty">Carregando…</p></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== CONQUISTAS ===================== -->
+  <main id="achievementsScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header">
+        <button id="backFromAchievements" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Conquistas</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <p class="panel-empty" id="achievementsProgress" style="margin-bottom:12px;">0 de 0 desbloqueadas</p>
+      <section id="achievementsGrid" class="achievements-grid"></section>
+    </div>
+  </main>
+
+  <!-- ===================== MUSEU ===================== -->
+  <main id="museumScreen" class="screen">
+    <div class="bank-wrap">
+      <header class="modos-header">
+        <button id="backFromMuseum" class="icon-btn back-btn" aria-label="Voltar">←</button>
+        <span class="modos-title">Museu</span>
+        <span class="icon-btn" style="visibility:hidden">←</span>
+      </header>
+      <p class="panel-empty" style="margin-bottom:12px;">Hall da Fama — os jogadores mais raros dos dois baralhos (GOAT e EXTREME).</p>
+      <div class="deck-tabs">
+        <button class="museum-tab active" data-museum-deck="normal">🃏 Normal</button>
+        <button class="museum-tab" data-museum-deck="professional">🏆 Profissional</button>
+      </div>
+      <section id="museumGrid" class="player-grid"></section>
+    </div>
+  </main>
+
+  <div id="iosModal" class="install-modal hidden" role="dialog" aria-modal="true" aria-labelledby="iosTitle">
+    <div class="install-modal-card">
+      <button id="closeIosModal" class="modal-close" aria-label="Fechar">×</button>
+      <h2 id="iosTitle">Adicionar no iPhone</h2>
+      <ol>
+        <li>Toque em <b>Compartilhar</b> no Safari.</li>
+        <li>Escolha <b>Adicionar à Tela de Início</b>.</li>
+        <li>Toque em <b>Adicionar</b>.</li>
+      </ol>
+      <p>Depois, abra o ícone do Cajá vs Vila pela tela inicial.</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('backFromSystem')?.addEventListener('click', () => document.querySelectorAll('.screen').forEach(el => el.classList.toggle('active', el.id === 'menuScreen')));
+    if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  </script>
+  <script type="module" src="js/app.js"></script>
+<!-- ===================== TORNEIO ONLINE ===================== -->
+<main id="tournamentScreen" class="screen">
+  <div class="modos-wrap">
+    <header class="modos-header"><button id="backFromTournament" class="icon-btn back-btn">←</button><span class="modos-title">Torneio Online</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+    <section id="tournamentLobby" class="mode-card local-turn-card">
+      <div class="mode-hero"><span>🏆</span><b>TORNEIO ONLINE · 4 JOGADORES</b><small>Semifinais, disputa pelo 3º lugar e final. Você joga com o nome e o avatar do seu perfil. Nenhuma partida conta para o ranking.</small></div>
+      <div class="tabs"><button id="tournamentTabCreate" class="tab-btn active" type="button">Criar torneio</button><button id="tournamentTabJoin" class="tab-btn" type="button">Entrar</button></div>
+      <section id="tournamentCreatePane"><label>🃏 BARALHO</label><div class="local-format-grid"><button class="draft-choice active" data-tour-deck="normal">🃏<b>Normal</b></button><button class="draft-choice" data-tour-deck="professional">🏆<b>Profissional</b></button></div><label>📋 FORMATO</label><div class="local-format-grid"><button class="draft-choice active" data-tour-format="5">⚽<b>5v5</b></button><button class="draft-choice" data-tour-format="11">🏟️<b>11v11</b></button></div><button id="criarTorneioBtn" class="btn btn-primary">🏆 CRIAR TORNEIO</button><p id="tournamentCreateError" class="error-text"></p></section>
+      <section id="tournamentJoinPane" class="hidden"><label>🔑 CÓDIGO</label><input id="tournamentCodeInput" class="mode-input online-code-input" maxlength="5" placeholder="EX: 7F3KQ"><button id="entrarTorneioBtn" class="btn btn-primary">➡️ ENTRAR NO TORNEIO</button><p id="tournamentJoinError" class="error-text"></p></section>
+    </section>
+    <section id="tournamentRoom" class="mode-card hidden"><div class="mode-card-kicker">TORNEIO <span id="tournamentCodeDisplay"></span></div><h2 id="tournamentRoomTitle">Aguardando jogadores…</h2><p id="tournamentRoomPlayers"></p><div class="online-status"><span class="online-dot"></span><span id="tournamentRoomStatus">0/4 jogadores</span></div><button id="tournamentCancelBtn" class="btn btn-logout">CANCELAR TORNEIO</button></section>
+    <section id="tournamentResult" class="mode-card hidden"><div class="mode-card-kicker">🏆 TORNEIO ENCERRADO</div><h2 id="tournamentChampion"></h2><p id="tournamentResultText"></p><button id="tournamentHomeBtn" class="btn btn-primary">🏠 VOLTAR AO INÍCIO</button></section>
+    <p id="tournamentError" class="error-text"></p>
+  </div>
+</main>
+
+</body>
+</html>

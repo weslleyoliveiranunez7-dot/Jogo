@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "usuarios": { ".indexOn": ["vitorias", "vitoriasOnline"] },
+    "historicoOnline": { ".indexOn": ["data"] }
+  }
+}

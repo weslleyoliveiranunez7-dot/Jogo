@@ -1,0 +1,57 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "nomes": {
+      "$nome": { ".read": true, ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() == auth.uid" }
+    },
+    "usuarios": {
+      "$nome": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.exists() ? newData.child('ownerUid').val() == auth.uid : data.child('ownerUid').val() == auth.uid)",
+        ".validate": "newData.child('ownerUid').val() == auth.uid && newData.hasChildren(['nome','vitorias','derrotas','vitoriasOnline','derrotasOnline'])"
+      }
+    },
+    "salasOnline": {
+      "$codigo": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.exists() ? newData.child('ownerUid').val() == auth.uid : data.child('ownerUid').val() == auth.uid)",
+        "convidado": { ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() == auth.uid" },
+        "squadConvidado": { ".write": "auth != null && data.parent().parent().child('convidado/ownerUid').val() == auth.uid && newData.child('ownerUid').val() == auth.uid" },
+        "squadAnfitriao": { ".write": "auth != null && data.parent().parent().child('ownerUid').val() == auth.uid && newData.child('ownerUid').val() == auth.uid" },
+        "resultado": { ".write": "auth != null && data.parent().parent().child('ownerUid').val() == auth.uid" },
+        "status": { ".write": "auth != null && ((!data.exists() && newData.val() == 'draft' && data.parent().child('convidado/ownerUid').val() == auth.uid) || data.parent().child('ownerUid').val() == auth.uid)" },
+        "revanche": {
+          "anfitriao": { ".write": "auth != null && data.parent().parent().child('anfitriao/ownerUid').val() == auth.uid" },
+          "convidado": { ".write": "auth != null && data.parent().parent().child('convidado/ownerUid').val() == auth.uid" }
+        },
+        "presenca": {
+          "anfitriao": { ".write": "auth != null && data.parent().parent().child('anfitriao/ownerUid').val() == auth.uid" },
+          "convidado": { ".write": "auth != null && data.parent().parent().child('convidado/ownerUid').val() == auth.uid" }
+        }
+      }
+    },
+    "torneiosOnline": {
+      "$codigo": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.exists() ? newData.child('ownerUid').val() == auth.uid : data.child('ownerUid').val() == auth.uid)",
+        "jogadores": {
+          "$slot": { ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() == auth.uid && ($slot == 'slot1' || $slot == 'slot2' || $slot == 'slot3')" }
+        },
+        "fases": {
+          "$fase": {
+            "$partida": {
+              "squads": {
+                "$slot": { ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() == auth.uid" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "historicoOnline": {
+      "$id": { ".read": "auth != null", ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() == auth.uid" }
+    },
+    "codigosEvento": { "$codigo": { ".read": true, ".write": "auth != null" } }
+  }
+}
