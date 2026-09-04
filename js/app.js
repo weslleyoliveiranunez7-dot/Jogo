@@ -153,7 +153,7 @@ const ACTION_SCREENS = {
   system: 'systemScreen',
   elenco: 'bankScreen',
   draft: 'draftSetupScreen',
-  campaign: 'campaignScreen', survival: 'survivalScreen', challenges: 'challengesScreen', local2p: 'local2pScreen',
+  campaign: 'campaignScreen', survival: 'survivalScreen', challenges: 'challengesScreen', local2p: 'local2pScreen', league: 'leagueScreen',
   online: 'onlineScreen',
   tournament: 'tournamentScreen',
   events: 'eventsScreen', eventCodes: 'eventCodesScreen',
@@ -173,6 +173,7 @@ function navigate(action) {
   if (action === 'records') renderRecords();
   if (action === 'achievements') renderAchievements();
   if (action === 'museum') renderMuseum();
+  if (action === 'league') renderLeagueScreen();
   if (action === 'home' && perfilAtual?.chave) { carregarRanking(); carregarHistoricoOnlineHome(); }
 }
 
@@ -730,9 +731,9 @@ function handleDraftPick(id){
   const aiChosen=legal.length?draftAiPick(legal):null;
   if(aiChosen)draftState.ai.push(aiChosen);
   renderDraftRosters();
-  if(draftState.user.length>=draftState.total){setTimeout(finishDraft,300);return;}
+  if(draftState.user.length>=draftState.total){setTimeout(finishDraft,200);return;}
   draftState.round++;
-  setTimeout(()=>{draftState.busy=false;updateDraftHud();draftMakeCards();},300);
+  setTimeout(()=>{draftState.busy=false;updateDraftHud();draftMakeCards();},200);
 }
 function updatePressureLabel(){const v=Number(document.getElementById('pressureRange')?.value||2); document.getElementById('pressureValue').textContent=v===1?'Baixa':v===3?'Alta':'Média'; draftState.plan.pressure=v;}
 
@@ -780,7 +781,7 @@ document.getElementById('makeSubBtn')?.addEventListener('click',()=>{
   document.getElementById('substitutionNote').textContent=`Entrou ${incoming.nome} no lugar de ${outgoing.nome}.`;
   renderPlanPlayers(); renderFormationPitch(); renderSubSelects();
 });
-document.getElementById('saveGamePlanBtn')?.addEventListener('click',()=>{ if(tournamentState.active){ submitTournamentDraft(); return; } if(onlineState.active){ submitOnlineSquad(); return; } openMatchSimulation(); });
+document.getElementById('saveGamePlanBtn')?.addEventListener('click',()=>{ if(tournamentState.active){ submitTournamentDraft(); return; } if(onlineState.active){ submitOnlineSquad(); return; } if(draftReturnAction==='league'){ finalizeLeagueCreation(); return; } openMatchSimulation(); });
 document.getElementById('openPlanAgainBtn')?.addEventListener('click',()=>{showScreen('gamePlanScreen');renderGamePlan();});
 document.getElementById('backFromGamePlan')?.addEventListener('click',()=>showScreen('draftResultScreen'));
 
@@ -816,8 +817,8 @@ function spawnBall(side,kind){
   const ball=document.createElement('div');
   ball.className=`ball-marker ball-fly-${side}${kind==='goal'?' ball-goal':''}`;
   pitch.appendChild(ball);
-  setTimeout(()=>ball.remove(),850);
-  if(kind==='goal'){pitch.classList.add('flash-goal');setTimeout(()=>pitch.classList.remove('flash-goal'),500);}
+  setTimeout(()=>ball.remove(),600);
+  if(kind==='goal'){pitch.classList.add('flash-goal');setTimeout(()=>pitch.classList.remove('flash-goal'),350);}
 }
 function renderPossessionBar(){
   const h=matchState.stats.home.posse,a=matchState.stats.away.posse;
@@ -918,7 +919,7 @@ function addEvent(minute,icon,title,detail,commentaryType,player,side){
   const c=COMMENTATORS[matchState.commentator]||COMMENTATORS['radio-vila'];
   const arr=c[commentaryType]||c.goal||[]; setCommentary(randomItem(arr));
   renderTimeline(); renderMatchPitch();
-  setTimeout(()=>{if(matchState.running){matchState.lastEventPlayer=null;renderMatchPitch();}},900);
+  setTimeout(()=>{if(matchState.running){matchState.lastEventPlayer=null;renderMatchPitch();}},650);
 }
 const DECISION_LIBRARY = [
   {id:'chutar',icon:'🥅',name:'Chutar',desc:'Finalizar a jogada imediatamente.',shot:1.55,pass:0.65,dribble:.85},
@@ -988,7 +989,7 @@ function generateMatchEvent(){
     matchState.momentum=clamp(matchState.momentum+(side==='home'?4.5:-4.5),-15,15);
     addEvent(matchState.minute,'⚽','GOL!',`${scorer.nome}${assist?' · assistência de '+assist.nome:''}`, 'goal',scorer,side);
     spawnBall(side,'goal');
-    if(assist){setTimeout(()=>{matchState.lastEventPlayer={id:assist.id,type:'assist'};renderMatchPitch();},300);}
+    if(assist){setTimeout(()=>{matchState.lastEventPlayer={id:assist.id,type:'assist'};renderMatchPitch();},220);}
     return;
   }
   if(Math.random()<.035){const p=randomItem(matchState[side]); const red=Math.random()<.08; matchState.momentum=clamp(matchState.momentum+(side==='home'?-2:2),-15,15); addEvent(matchState.minute,red?'🟥':'🟨',red?'EXPULSÃO':'CARTÃO',`${p.nome} recebeu ${red?'cartão vermelho':'cartão amarelo'}.`,red?'red':'yellow',p,side);return;}
@@ -1153,6 +1154,145 @@ function startChallenge(id){
   matchContext.type='challenge';matchContext.challengeId=id;matchContext.homeName='WESLLEY FC';matchContext.awayName=randomOpponentName();matchContext.targetBoost=c.boost;matchContext.customHome=null;matchContext.customAway=null;
   openDraftSetup('challenges');
 }
+// ===================== LIGA OFFLINE (pontos corridos) =====================
+function loadLeague(){ try{return JSON.parse(localStorage.getItem('cv_league_state')||'null');}catch{return null;} }
+function saveLeague(st){ localStorage.setItem('cv_league_state', JSON.stringify(st)); }
+function leagueTeamName(st,id){ const t=st.teams.find(x=>x.id===id); return t?t.name:'???'; }
+function generateRoundRobin(ids){
+  // método do círculo: 1 time fica fixo, os outros giram a cada rodada
+  const arr=ids.slice(1), fixed=ids[0], rounds=[];
+  for(let r=0;r<ids.length-1;r++){
+    const order=[fixed,...arr], round=[];
+    for(let i=0;i<ids.length/2;i++){
+      const home=order[i], away=order[ids.length-1-i];
+      round.push({home, away, played:false, hs:null, as:null});
+    }
+    rounds.push(round);
+    arr.push(arr.shift());
+  }
+  return rounds;
+}
+function leagueGoals(forca,rival){
+  const diff=(forca-rival)/25;
+  return Math.max(0, Math.min(6, Math.round((1+Math.random()*2+diff)*(0.4+Math.random()))));
+}
+function leagueApplyResult(st,fx,hs,as){
+  fx.played=true; fx.hs=hs; fx.as=as;
+  const th=st.table[fx.home], ta=st.table[fx.away];
+  th.j++; ta.j++; th.gp+=hs; th.gc+=as; ta.gp+=as; ta.gc+=hs;
+  if(hs>as){th.v++; th.pts+=3; ta.d++;}
+  else if(hs<as){ta.v++; ta.pts+=3; th.d++;}
+  else {th.e++; ta.e++; th.pts++; ta.pts++;}
+}
+function leagueSimAiFixture(st,fx){
+  const home=st.teams.find(t=>t.id===fx.home), away=st.teams.find(t=>t.id===fx.away);
+  leagueApplyResult(st, fx, leagueGoals(home.forca,away.forca), leagueGoals(away.forca,home.forca));
+}
+function leagueAutoSimRound(st,ri){
+  const round=st.rounds[ri]; if(!round)return;
+  round.forEach(fx=>{ if(!fx.played && fx.home!==0 && fx.away!==0) leagueSimAiFixture(st,fx); });
+}
+function leagueFindUserFixture(st){
+  const round=st.rounds[st.currentRound]; if(!round)return null;
+  return round.find(fx=>!fx.played && (fx.home===0||fx.away===0)) || null;
+}
+function leagueOrderedIds(st){
+  return st.teams.map(t=>t.id).sort((a,b)=>{
+    const ta=st.table[a], tb=st.table[b];
+    if(tb.pts!==ta.pts) return tb.pts-ta.pts;
+    if((tb.gp-tb.gc)!==(ta.gp-ta.gc)) return (tb.gp-tb.gc)-(ta.gp-ta.gc);
+    return tb.gp-ta.gp;
+  });
+}
+let leaguePendingTeams = 6;
+function createLeague(){
+  leaguePendingTeams=Number(document.querySelector('[data-league-teams].active')?.dataset.leagueTeams||6);
+  resetDraft();
+  openDraftSetup('league'); // usuário faz o draft do time UMA VEZ; o time vale pra temporada toda
+}
+function finalizeLeagueCreation(){
+  const numTeams=leaguePendingTeams, deck=draftState.deck, format=draftState.format;
+  const rivalNames=shuffle(OPPONENT_NAMES).slice(0,numTeams-1);
+  const teams=[{id:0,name:perfilAtual?.nome||'WESLLEY FC',isUser:true,forca:84}];
+  rivalNames.forEach((name,i)=>teams.push({id:i+1,name,isUser:false,forca:76+Math.floor(Math.random()*17)}));
+  const table={}; teams.forEach(t=>table[t.id]={pts:0,j:0,v:0,e:0,d:0,gp:0,gc:0});
+  const userSquad={starters:draftState.plan.starters.map(x=>x.player),reserves:draftState.plan.reserves.slice()};
+  const st={active:true,finished:false,deck,format,teams,table,userSquad,rounds:generateRoundRobin(teams.map(t=>t.id)),currentRound:0,champion:null};
+  leagueAutoSimRound(st,0);
+  saveLeague(st);
+  renderLeagueScreen(); showScreen('leagueScreen');
+}
+function resetLeague(){ localStorage.removeItem('cv_league_state'); renderLeagueScreen(); }
+function leagueBuildOpponentSquad(st,opp){
+  const deck=deckData[st.deck]||PLAYERS_NORMAL, need=st.format===5?5:11;
+  const target=Math.max(0, avgOvr(st.userSquad.starters)-2+Math.round(Math.random()*5)+(opp.forca-84));
+  const ranked=shuffle(deck).sort((a,b)=>Math.abs(a.ovr-target)-Math.abs(b.ovr-target));
+  const chosen=[]; const ids=new Set();
+  const keeper=ranked.find(p=>draftPosition(p).includes('GOL')); if(keeper){chosen.push(keeper);ids.add(keeper.id);}
+  for(const p of ranked){if(chosen.length>=need)break;if(ids.has(p.id))continue;chosen.push(p);ids.add(p.id);}
+  return {starters:chosen.slice(0,need),reserves:ranked.filter(p=>!ids.has(p.id)).slice(0,Math.max(3,need===5?3:5))};
+}
+function startLeagueFixture(fx,st){
+  const oppId=fx.home===0?fx.away:fx.home, opp=st.teams.find(t=>t.id===oppId);
+  matchContext.type='league'; matchContext.homeName=perfilAtual?.nome||'WESLLEY FC'; matchContext.awayName=opp.name;
+  matchContext.targetBoost=0; matchContext.challengeId=null;
+  matchContext.customHome={starters:st.userSquad.starters,reserves:st.userSquad.reserves};
+  matchContext.customAway=leagueBuildOpponentSquad(st,opp);
+  openMatchSimulation(); // time da liga já está pronto: vai direto pra partida, sem draft de novo
+}
+function leagueFinishMatch(result){
+  const st=loadLeague(); if(!st)return;
+  const fx=leagueFindUserFixture(st); if(!fx)return;
+  const hs=matchState.score[0], as=matchState.score[1];
+  if(fx.home===0) leagueApplyResult(st,fx,hs,as); else leagueApplyResult(st,fx,as,hs);
+  st.currentRound++;
+  if(st.currentRound>=st.rounds.length){
+    st.finished=true; st.champion=leagueTeamName(st,leagueOrderedIds(st)[0]);
+    if(st.champion===leagueTeamName(st,0)) localStorage.setItem('cv_titles',String(Number(localStorage.getItem('cv_titles')||0)+1));
+  } else {
+    leagueAutoSimRound(st,st.currentRound);
+  }
+  saveLeague(st);
+}
+function renderLeagueTable(st){
+  const box=document.getElementById('leagueTable'); if(!box)return;
+  const head='<div class="league-table-head"><span>#</span><span>TIME</span><span>J</span><span>V</span><span>E</span><span>D</span><span>SG</span><span>PTS</span></div>';
+  const rows=leagueOrderedIds(st).map((id,i)=>{
+    const t=st.table[id], team=st.teams.find(x=>x.id===id);
+    return `<div class="league-row ${team.isUser?'is-user':''}"><span>${i+1}</span><span>${team.name}</span><span>${t.j}</span><span>${t.v}</span><span>${t.e}</span><span>${t.d}</span><span>${t.gp-t.gc}</span><span>${t.pts}</span></div>`;
+  }).join('');
+  box.innerHTML=head+rows;
+}
+function renderLeagueCalendar(st){
+  const box=document.getElementById('leagueCalendar'); if(!box)return;
+  box.innerHTML=st.rounds.map((round,ri)=>{
+    const fixtures=round.map(fx=>{
+      const isUser=fx.home===0||fx.away===0;
+      const score=fx.played?`<span class="league-score">${fx.hs} × ${fx.as}</span>`:(ri===st.currentRound&&isUser&&!st.finished?`<button class="btn btn-primary league-play-btn" data-league-play="1" type="button">🃏 JOGAR</button>`:'<span class="league-score">— × —</span>');
+      return `<div class="league-fixture ${isUser?'is-user':''}"><span>${leagueTeamName(st,fx.home)}</span>${score}<span>${leagueTeamName(st,fx.away)}</span></div>`;
+    }).join('');
+    return `<div class="league-round"><div class="league-round-title">RODADA ${ri+1}${ri===st.currentRound&&!st.finished?' • ATUAL':''}</div>${fixtures}</div>`;
+  }).join('');
+}
+function renderLeagueScreen(){
+  const st=loadLeague();
+  const setupCard=document.getElementById('leagueSetupCard'), activeBox=document.getElementById('leagueActiveBox');
+  if(!st || !st.active){ setupCard.classList.remove('hidden'); activeBox.classList.add('hidden'); return; }
+  setupCard.classList.add('hidden'); activeBox.classList.remove('hidden');
+  document.getElementById('leagueHeroSub').textContent = st.finished ? `🏆 CAMPEÃO: ${st.champion}` : `Rodada ${st.currentRound+1} de ${st.rounds.length}`;
+  renderLeagueTable(st); renderLeagueCalendar(st);
+}
+document.querySelectorAll('[data-league-teams]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-league-teams]').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+document.getElementById('startLeagueBtn')?.addEventListener('click',createLeague);
+document.getElementById('resetLeagueBtn')?.addEventListener('click',()=>{if(confirm('Isso vai encerrar a temporada atual e começar uma liga nova. Continuar?'))resetLeague();});
+document.getElementById('backFromLeague')?.addEventListener('click',()=>navigate('modos'));
+document.getElementById('leagueCalendar')?.addEventListener('click',e=>{
+  if(!e.target.closest('[data-league-play]'))return;
+  const st=loadLeague(); if(!st)return; const fx=leagueFindUserFixture(st); if(!fx)return;
+  startLeagueFixture(fx,st);
+});
+
+
 function teamForLocal(target,need){
   return {starters:makeGeneratedTeam(target,need),reserves:makeGeneratedTeam(target,Math.max(3,need===5?3:5))};
 }
@@ -1189,8 +1329,8 @@ function finishLocalDraft(){
 function handleLocalDraftPick(id){
   if(localDraftState.busy)return;const p=localDraftState.cards.find(x=>x.id===id);if(!p)return;const arr=localDraftState.turn%2===0?localDraftState.p1:localDraftState.p2;if(!localDraftCanAdd(arr,p))return;
   localDraftState.busy=true;arr.push(p);localDraftState.turn++;localDraftRender();
-  if(localDraftState.p1.length>=localDraftState.total&&localDraftState.p2.length>=localDraftState.total){setTimeout(finishLocalDraft,350);return;}
-  setTimeout(()=>{localDraftState.busy=false;localDraftMakeCards();localDraftRender();},250);
+  if(localDraftState.p1.length>=localDraftState.total&&localDraftState.p2.length>=localDraftState.total){setTimeout(finishLocalDraft,240);return;}
+  setTimeout(()=>{localDraftState.busy=false;localDraftMakeCards();localDraftRender();},170);
 }
 
 function startLocal2P(){ startLocalDraft(); }
@@ -1231,6 +1371,11 @@ function handleSpecialMatchFinish(result){
     if(c&&result==='VITÓRIA'&&challengeCheck(c,hs,as)){markChallenge(c.id);document.getElementById('finalWinnerNote').textContent='🎯 DESAFIO CONCLUÍDO!';}
     else if(c){document.getElementById('finalWinnerNote').textContent=result==='VITÓRIA'?'Quase! A condição do desafio não foi cumprida.':'Desafio não concluído.';}
     btn.textContent='🎯 VOLTAR AOS DESAFIOS';btn.dataset.special='challenges';
+  } else if(matchContext.type==='league'){
+    leagueFinishMatch(result);
+    const st=loadLeague();
+    document.getElementById('finalWinnerNote').textContent = st?.finished ? `🏆 FIM DA LIGA — CAMPEÃO: ${st.champion}` : '📅 Rodada registrada na tabela.';
+    btn.textContent='📋 VOLTAR À LIGA';btn.dataset.special='league-back';
   } else if(matchContext.type==='local2p'){
     btn.textContent='🔁 REVANCHE';btn.dataset.special='local2p-revanche';
   } else if(matchContext.type==='online'){
@@ -1249,6 +1394,7 @@ function handleSpecialContinue(){
   if(special==='survival-next'){renderSurvival();showScreen('survivalScreen');return;}
   if(special==='survival-end'){renderSurvival();showScreen('survivalScreen');return;}
   if(special==='challenges'){renderChallenges();showScreen('challengesScreen');return;}
+  if(special==='league-back'){renderLeagueScreen();showScreen('leagueScreen');return;}
   if(special==='local2p-revanche'){openMatchSimulation();return;}
   if(special==='online-revanche'){aceitarRevancheOnline();return;}
   if(special==='normal-revanche'){openMatchSimulation();return;}
@@ -1270,6 +1416,7 @@ document.querySelectorAll('[data-action]').forEach(btn=>btn.addEventListener('cl
   if(a==='campaign'){renderCampaign();}
   if(a==='survival'){survivalState.streak=0;renderSurvival();}
   if(a==='challenges'){renderChallenges();}
+  if(a==='league'){renderLeagueScreen();}
 }));
 
 document.getElementById('backFromCampaign')?.addEventListener('click',()=>navigate('modos'));
