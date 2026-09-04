@@ -177,14 +177,17 @@
       </header>
 
       <section class="modos-list">
-        <button class="modos-item modos-item-active" data-action="campaign" type="button">
-          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4h9v4.3a4.5 4.5 0 0 1-9 0V4Z"/><path d="M7.5 5.3H5a2.6 2.6 0 0 0 2.5 2.9M16.5 5.3H19A2.6 2.6 0 0 1 16.5 8.2"/><path d="M12 12.8v3.4"/><path d="M8.7 20h6.6"/><path d="M8.7 20c0-2.1 1.3-3.3 3.3-3.3s3.3 1.2 3.3 3.3"/></svg></span></span><span class="modos-name">Modo Campanha</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
-        </button>
+        <h3 class="modos-section-label"><span class="modos-section-dot modos-section-dot-online"></span>Online</h3>
         <button class="modos-item modos-item-active" data-action="online" type="button">
           <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17"/></svg></span></span><span class="modos-name">Modo Online</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
         </button>
         <button class="modos-item modos-item-active" data-action="tournament" type="button">
           <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 6.3 10.3M15 3l2.7 7.3"/><path d="M9 3h6"/><circle cx="12" cy="15.3" r="5.2"/><circle cx="12" cy="15.3" r="2.3"/></svg></span></span><span class="modos-name">Torneio Online</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+
+        <h3 class="modos-section-label"><span class="modos-section-dot modos-section-dot-offline"></span>Offline</h3>
+        <button class="modos-item modos-item-active" data-action="campaign" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4h9v4.3a4.5 4.5 0 0 1-9 0V4Z"/><path d="M7.5 5.3H5a2.6 2.6 0 0 0 2.5 2.9M16.5 5.3H19A2.6 2.6 0 0 1 16.5 8.2"/><path d="M12 12.8v3.4"/><path d="M8.7 20h6.6"/><path d="M8.7 20c0-2.1 1.3-3.3 3.3-3.3s3.3 1.2 3.3 3.3"/></svg></span></span><span class="modos-name">Modo Campanha</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
         </button>
         <button class="modos-item modos-item-active" data-action="survival" type="button">
           <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8c1.6 2.8 5 5.2 5 9.4a5 5 0 1 1-10 0c0-1.6.7-2.6 1.5-3.4-.2 1.4.6 2 1.3 1.7-.7-2.5.7-4.8 2.2-7.7Z"/></svg></span></span><span class="modos-name">Modo Sobrevivência</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
@@ -197,6 +200,9 @@
         </button>
         <button class="modos-item modos-item-active" data-action="challenges" type="button">
           <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.3"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></span></span><span class="modos-name">Desafios</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
+        </button>
+        <button class="modos-item modos-item-active" data-action="league" type="button">
+          <span class="modos-icon"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17M8 5v14"/></svg></span></span><span class="modos-name">Liga Offline</span><span class="soon-tag ready-tag">DISPONÍVEL</span>
         </button>
       </section>
     </div>
@@ -277,6 +283,33 @@
       <header class="modos-header"><button id="backFromChallenges" class="icon-btn back-btn">←</button><span class="modos-title">Desafios</span><span class="icon-btn" style="visibility:hidden">←</span></header>
       <section class="mode-hero"><span>🎯</span><b>DESAFIOS DA SEMANA</b><small>Regras diferentes para testar seu time.</small></section>
       <div id="challengeList" class="challenge-list"></div>
+    </div>
+  </main>
+
+  <!-- ===================== LIGA OFFLINE ===================== -->
+  <main id="leagueScreen" class="screen">
+    <div class="modos-wrap">
+      <header class="modos-header"><button id="backFromLeague" class="icon-btn back-btn">←</button><span class="modos-title">Liga Offline</span><span class="icon-btn" style="visibility:hidden">←</span></header>
+
+      <section id="leagueSetupCard" class="mode-card local-turn-card hidden">
+        <div class="mode-card-kicker">NOVA TEMPORADA</div>
+        <h2>🏆 Liga Offline</h2>
+        <p>Pontos corridos: cada time enfrenta todos os outros uma vez. Você faz o draft do seu time <b>uma única vez</b>, no começo — esse elenco vale pra temporada inteira. Os outros jogos de cada rodada são simulados automaticamente.</p>
+        <label>👥 Nº DE TIMES</label>
+        <div class="league-teams-grid">
+          <button type="button" class="draft-choice active" data-league-teams="4">4</button>
+          <button type="button" class="draft-choice" data-league-teams="6">6</button>
+          <button type="button" class="draft-choice" data-league-teams="8">8</button>
+        </div>
+        <button id="startLeagueBtn" class="btn btn-primary" type="button">🃏 FAZER DRAFT E CRIAR LIGA</button>
+      </section>
+
+      <section id="leagueActiveBox" class="hidden">
+        <section class="mode-hero"><span>🏆</span><b id="leagueHeroTitle">LIGA OFFLINE</b><small id="leagueHeroSub">Pontos corridos</small></section>
+        <div id="leagueTable" class="league-table"></div>
+        <div id="leagueCalendar" class="league-calendar"></div>
+        <button id="resetLeagueBtn" class="btn btn-logout" type="button">↻ ENCERRAR E RECOMEÇAR LIGA</button>
+      </section>
     </div>
   </main>
 
